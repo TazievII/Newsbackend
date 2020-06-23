@@ -11,7 +11,6 @@ const auth = require('./middlewares/auth');
 const routes = require('./routes/routes');
 const { login, createUser } = require('./controllers/users');
 const { ErrorMiddleware } = require('./middlewares/error');
-const { urlValidate } = require('./middlewares/isURL');
 // Слушаем 3000 порт
 const { PORT = 3000 } = process.env;
 
@@ -45,8 +44,6 @@ app.post('/signin', celebrate({
 app.post('/signup', celebrate({
   body: Joi.object().keys({
     name: Joi.string().required().min(2).max(30),
-    about: Joi.string().required().min(2).max(30),
-    avatar: Joi.string().custom(urlValidate, 'urlValidator').required(),
     email: Joi.string().required().email(),
     password: Joi.string().required().min(8),
   }),

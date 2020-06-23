@@ -7,7 +7,6 @@ const handleAuthError = () => {
   throw new NonAuth('Необходима авторизация');
 };
 
-
 module.exports = (req, res, next) => {
   if (!req.cookies.jwt) {
     handleAuthError(res);

@@ -25,7 +25,7 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-mongoose.connect('mongodb://localhost:27017/mestodb', {
+mongoose.connect('mongodb://localhost:27017/newsanalyzerdb', {
   useNewUrlParser: true,
   useCreateIndex: true,
   useFindAndModify: false,

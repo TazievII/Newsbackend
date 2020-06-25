@@ -3,13 +3,13 @@ const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
 const express = require('express');
 require('dotenv').config();
-const { Joi, celebrate, errors } = require('celebrate');
+const { errors } = require('celebrate');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const auth = require('./middlewares/auth');
 const routes = require('./routes/routes');
-const { login, createUser } = require('./controllers/users');
+const { signInRouter, signUpRouter } = require('./routes/auth');
 const { ErrorMiddleware } = require('./middlewares/error');
 // Слушаем 3000 порт
 const { PORT = 3000 } = process.env;
@@ -35,24 +35,10 @@ mongoose.connect('mongodb://localhost:27017/newsanalyzerdb', {
 app.use(limiter);
 app.use(helmet());
 app.use(requestLogger);
-
-app.post('/signin', celebrate({
-  body: Joi.object().keys({
-    email: Joi.string().required().email(),
-    password: Joi.string().required().min(8),
-  }),
-}), login);
-app.post('/signup', celebrate({
-  body: Joi.object().keys({
-    name: Joi.string().required().min(2).max(30),
-    email: Joi.string().required().email(),
-    password: Joi.string().required().min(8),
-  }),
-}), createUser);
-
+app.use('/', signUpRouter);
+app.use('/', signInRouter);
 app.use(auth);
 app.use('/', routes);
-
 app.use(errorLogger);
 app.use(errors());
 app.use(ErrorMiddleware);

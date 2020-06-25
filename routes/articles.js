@@ -23,3 +23,5 @@ articlesRouter.delete('/:articleId', celebrate({
     articleId: Joi.string().alphanum().length(24),
   }),
 }), deleteArticle);
+
+module.exports = articlesRouter;

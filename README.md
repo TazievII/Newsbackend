@@ -1,12 +1,11 @@
 # Newsbackend
 ## News Analyzer back-end
+### https://api.newzz-analyzer.tk/ https://www.api.newzz-analyzer.tk/
 
-### создаёт пользователя с переданными в теле
-#### email, password и name
+### создаёт пользователя с переданными в теле email, password и name
 #### POST /signup
 
-### проверяет переданные в теле почту и пароль
-#### и возвращает JWT
+### проверяет переданные в теле почту и пароль и возвращает JWT
 #### POST /signin
 
 ### возвращает информацию о пользователе (email и имя)

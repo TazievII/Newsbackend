@@ -38,7 +38,8 @@ module.exports.deleteArticle = (req, res, next) => {
       if (!article) {
         throw new NotFound('Статьи нет по указанному id');
       } if (article.owner._id.toString() === req.user._id) {
-        return article.remove(req.params.articleId).then(() => res.status(200).send({ message: 'Удалено' }));
+        article.remove(req.params.articleId).then(res.status(200).send({ message: 'Удалено' }));
+        return;
       } throw new Forbidden('Недостаточно прав');
     })
     .catch(next);

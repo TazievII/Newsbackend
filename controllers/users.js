@@ -8,16 +8,13 @@ const NotFound = require('../errors/notfound');
 const BatRequest = require('../errors/badrequest');
 const EmailExist = require('../errors/emailExist');
 
-// eslint-disable-next-line consistent-return
 module.exports.createUser = (req, res, next) => {
   const {
-    name, about, avatar, email, password,
+    name, email, password,
   } = req.body;
   bcrypt.hash(password, 10)
     .then((hash) => User.create({
       name,
-      about,
-      avatar,
       email,
       password: hash,
     }))
@@ -25,8 +22,6 @@ module.exports.createUser = (req, res, next) => {
       res.status(201).send({
         _id: user._id,
         name: user.name,
-        about: user.about,
-        avatar: user.avatar,
         email: user.email,
       });
     })
@@ -72,7 +67,6 @@ module.exports.findUser = (req, res, next) => {
     .catch(next);
 };
 
-// eslint-disable-next-line consistent-return
 module.exports.updateUser = (req, res, next) => {
   const { name, about } = req.body;
   const opts = { runValidators: true };

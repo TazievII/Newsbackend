@@ -3,9 +3,9 @@ const NotFound = require('../errors/notfound');
 const Forbidden = require('../errors/forbidden');
 
 module.exports.getArticles = (req, res, next) => {
-  Article.owner.findById(req.user._id)
+  Article.find({ owner: req.user._id })
     .then((articles) => {
-      res.status(200).send(articles);
+      res.status(200).send({ articles });
     })
     .catch(next);
 };
@@ -18,7 +18,16 @@ module.exports.createArticle = (req, res, next) => {
     keyword, title, text, date, source, link, image, owner: req.user._id,
   })
     .then((article) => {
-      res.status(200).send({ data: article });
+      res.status(200).send({
+        _id: article._id,
+        keyword,
+        title,
+        text,
+        date,
+        source,
+        link,
+        image,
+      });
     })
     .catch(next);
 };
